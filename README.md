@@ -1,10 +1,10 @@
-# Seminario de Actualización en Programación, TP Nº3
+# Trabajo Práctico Nº3 - Seminario de Actualización en Programación
 
-### Universidad Siglo 21
+## Universidad Siglo 21
 
 **Autor:**
 
-- Matias Sebastiao, DNI 31070095, VINF011605
+- Matías Sebastián, DNI 31070095, VINF011605
 
 **Profesores:**
 
@@ -13,53 +13,50 @@
 
 ## Resumen
 
-Este proyecto ha sido desarrollado como parte del trabajo práctico Nº2 para el Seminario de Actualización en
-Programación en la Universidad Siglo 21. El objetivo es diseñar y desarrollar los prototipos de interfaz y diagrama de
-navegación para un sistema de información destinado a gestionar operaciones en una empresa. El desarrollo se realizó
-utilizando JavaFX, una librería gráfica de Java, complementada con PlantUML para el diseño de diagramas.
+Este proyecto aborda el Trabajo Práctico Nº3 del Seminario de Actualización en Programación. El enfoque principal es la aplicación del patrón Modelo-Vista-Controlador (MVC) propuesto por Trygve Reenskaug, junto con el patrón de arquitectura Objeto-Acceso a Datos (DAO) para la gestión de datos en una base de datos relacional. El diseño de clases se modela utilizando PlantUML y se complementa con la implementación de al menos tres patrones de diseño adicionales (Singleton, Factory Method, Command, State, Strategy o Decorator).
 
-**Palabras Clave:** plantuml, javafx
+**Palabras Clave:** MVC, DAO, PlantUML, Patrones de Diseño, Java
 
-## Requisitos
+## Diseño y Arquitectura
 
-Para ejecutar este proyecto, asegúrate de tener instalado lo siguiente:
+* **Modelo-Vista-Controlador (MVC):** Se aplica este patrón para separar la lógica de negocio (Modelo), la presentación (Vista) y la interacción del usuario (Controlador).
+* **Objeto-Acceso a Datos (DAO):** Se utiliza este patrón para abstraer el acceso a la base de datos, proporcionando una interfaz común para realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre los datos.
+* **Patrones de Diseño Adicionales:** Se implementan al menos tres patrones de diseño adicionales para mejorar la modularidad, flexibilidad y mantenibilidad del código. Los patrones específicos utilizados se detallan en la documentación del proyecto.
 
-- JDK 19 o superior
-- JavaFX SDK (puedes descargarlo desde [OpenJFX](https://openjfx.io/))
-- IDE de tu preferencia configurado para trabajar con JavaFX (Ejemplo: IntelliJ IDEA, Eclipse)
+## Diagrama Entidad-Relación (DER)
 
-## Configuración del Proyecto
+El DER se encuentra en el archivo `diagrama_entidad_relacion.puml` y se ha generado utilizando PlantUML. Este diagrama modela la estructura de la base de datos relacional y sus relaciones, reflejando el diseño de clases del modelo.
 
-1. **Descargar JavaFX SDK**: Descarga el SDK de JavaFX desde el sitio oficial y extrae el contenido en una ubicación de
-   tu preferencia.
+## Implementación
 
-2. **Configuración de IDE**:
-    - **IntelliJ IDEA**:
-        - Crea un nuevo proyecto de Java.
-        - En `Project Structure` -> `Libraries`, agrega el directorio `lib` del JavaFX SDK descargado como una nueva
-          biblioteca.
-        - En la configuración de ejecución, añade el siguiente argumento VM para incorporar los módulos de JavaFX:
-          ```
-          --module-path /path/to/javafx-sdk/lib --add-modules javafx.controls,javafx.fxml
-          ```
-    - **Eclipse**:
-        - Crea un proyecto de Java.
-        - Ve a `Project Properties` -> `Java Build Path` y añade el directorio `lib` del JavaFX SDK como biblioteca
-          externa.
-        - En la configuración de ejecución, añade los mismos argumentos VM que para IntelliJ.
+El proyecto se ha implementado en Java, utilizando las siguientes herramientas y tecnologías:
 
-3. **Clonar el repositorio**:
-   ```
-   git clone [url-del-repositorio]
+* **Lenguaje:** Java
+* **Modelado:** PlantUML
+* **Patrones:** MVC, DAO, Singleton, Factory Method, (otros patrones según implementación)
+
+## Instrucciones de Uso
+
+1. **Clonar el Repositorio:**
+   ```bash
+   git clone https://docs.github.com/es/repositories
    ```
 
-## Ejecución del Proyecto
+2. **Configuración del Entorno:**
+    * Asegúrate de tener instalado el JDK de Java y PlantUML.
+    * Configura la conexión a la base de datos en el archivo de configuración del proyecto.
 
-Para ejecutar el proyecto:
+3. **Generar el DER:**
+   ```bash
+   plantuml diagrama_entidad_relacion.puml
+   ```
 
-1. Abre el proyecto clonado en tu IDE.
-2. Navega al archivo `HomeScreen.java`.
-3. Ejecuta el archivo usando el IDE para iniciar la aplicación.
+4. **Ejecutar la Aplicación:**
+   ```bash
+   java -jar nombre_del_archivo.jar
+   ```
 
-El sistema mostrará una interfaz gráfica que permite navegar entre diferentes funciones y módulos del sistema de
-información diseñado para la empresa.
+## Referencias
+
+* **Trygve Reenskaug:** [https://folk.universitetetioslo.no/trygver/](https://folk.universitetetioslo.no/trygver/)
+* **PlantUML:** [https://plantuml.com/es/](https://plantuml.com/es/)
