@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="com.msebastiao.sap.controller.RegistrarAsistenciaController"
+          prefHeight="400.0" prefWidth="600.0"
+          hgap="10"
+          vgap="8">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <Label text="Buscar turno:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <TextField fx:id="searchField" promptText="Introduzca DNI o apellido" GridPane.rowIndex="0"
+               GridPane.columnIndex="1"/>
+    <Button text="Buscar" onAction="#handleSearch" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+
+    <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextField fx:id="nameField" editable="false" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    <Label text="Fecha y hora del turno:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <TextField fx:id="dateField" editable="false" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+    <Button text="Confirmar Asistencia" onAction="#handleConfirm" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+</GridPane>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="com.msebastiao.sap.controller.RealizarMantenimientoController"
+          prefHeight="400.0" prefWidth="600.0"
+          hgap="10"
+          vgap="8">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <Label text="Ficha N°:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <TextField fx:id="fichaField" promptText="Ingrese el número de ficha" GridPane.rowIndex="0"
+               GridPane.columnIndex="1"/>
+
+    <Label text="Cliente:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextField fx:id="clienteField" editable="false" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    <Label text="Vehículo:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <TextField fx:id="vehiculoField" editable="false" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+    <Label text="Actividades realizadas:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <TextArea fx:id="actividadesArea" prefHeight="100" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+    <Label text="Repuestos utilizados:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+    <TextArea fx:id="repuestosArea" prefHeight="100" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+    <Button text="Finalizar Mantenimiento" onAction="#handleFinalizarMantenimiento" GridPane.rowIndex="5"
+            GridPane.columnIndex="1"/>
+</GridPane>

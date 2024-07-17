@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="com.msebastiao.sap.controller.GenerarInformeMensualController"
+          prefHeight="400.0" prefWidth="600.0"
+          hgap="10"
+          vgap="8">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <Label text="Mes:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <ComboBox fx:id="mesComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Enero"/>
+                <String fx:value="Febrero"/>
+                <String fx:value="Marzo"/>
+                <String fx:value="Abril"/>
+                <String fx:value="Mayo"/>
+                <String fx:value="Junio"/>
+                <String fx:value="Julio"/>
+                <String fx:value="Agosto"/>
+                <String fx:value="Septiembre"/>
+                <String fx:value="Octubre"/>
+                <String fx:value="Noviembre"/>
+                <String fx:value="Diciembre"/>
+            </FXCollections>
+        </items>
+    </ComboBox>
+
+    <Label text="Tipo de Informe:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <ComboBox fx:id="tipoComboBox" GridPane.rowIndex="1" GridPane.columnIndex="1">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Servicios realizados"/>
+                <String fx:value="Ingresos generados"/>
+                <String fx:value="Repuestos utilizados"/>
+            </FXCollections>
+        </items>
+    </ComboBox>
+
+    <Button text="Generar Informe" onAction="#handleGenerarInforme" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+</GridPane>
