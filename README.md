@@ -39,7 +39,7 @@ El proyecto se ha implementado en Java, utilizando las siguientes herramientas y
 
 1. **Clonar el Repositorio:**
    ```bash
-   git clone https://docs.github.com/es/repositories
+   git clone https://github.com/matsebas/sap-tp3
    ```
 
 2. **Configuración del Entorno:**
