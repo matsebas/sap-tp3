@@ -4,15 +4,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class ViewManager {
 
     private static ViewManager instance;
-
-    private ViewManager() {
-    }
 
     /**
      * Devuelve la instancia de la clase ViewManager aplicando el patrón Singleton
