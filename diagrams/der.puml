@@ -1,0 +1,68 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class actividades {
+   descripcion: varchar(255)
+   tiempo_empleado: int
+   estado: varchar(50)
+   ficha_mecanica_id: int
+   id: int
+}
+class fichas_mecanicas {
+   mecanico_id: int
+   titular_vehiculo_id: int
+   vehiculo_id: int
+   fecha_inicio: date
+   fecha_fin: date
+   estado: varchar(50)
+   id: int
+}
+class informes {
+   fecha: date
+   contenido: text
+   id: int
+}
+class mecanicos {
+   nombre: varchar(100)
+   apellido: varchar(100)
+   id: int
+}
+class repuestos {
+   nombre: varchar(100)
+   cantidad: int
+   ficha_mecanica_id: int
+   id: int
+}
+class titular_vehiculo {
+   dni: varchar(20)
+   nombre: varchar(100)
+   apellido: varchar(100)
+   id: int
+}
+class turnos {
+   fecha: date
+   hora_inicio: time
+   hora_fin: time
+   estado: varchar(50)
+   titular_vehiculo_id: int
+   id: int
+}
+class vehiculos {
+   marca: varchar(50)
+   modelo: varchar(50)
+   anio: int
+   titular_vehiculo_id: int
+   id: int
+}
+
+actividades       -[#595959,plain]-^  fichas_mecanicas : "ficha_mecanica_id:id"
+fichas_mecanicas  -[#595959,plain]-^  mecanicos        : "mecanico_id:id"
+fichas_mecanicas  -[#595959,plain]-^  titular_vehiculo : "titular_vehiculo_id:id"
+fichas_mecanicas  -[#595959,plain]-^  vehiculos        : "vehiculo_id:id"
+repuestos         -[#595959,plain]-^  fichas_mecanicas : "ficha_mecanica_id:id"
+turnos            -[#595959,plain]-^  titular_vehiculo : "titular_vehiculo_id:id"
+vehiculos         -[#595959,plain]-^  titular_vehiculo : "titular_vehiculo_id:id"
+@enduml
