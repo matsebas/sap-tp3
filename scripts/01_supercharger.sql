@@ -15,7 +15,7 @@ CREATE TABLE vehiculos
     id                  INT AUTO_INCREMENT PRIMARY KEY,
     marca               VARCHAR(50) NOT NULL,
     modelo              VARCHAR(50) NOT NULL UNIQUE,
-    año                 INT         NOT NULL,
+    anio                 INT         NOT NULL,
     titular_vehiculo_id INT,
     FOREIGN KEY (titular_vehiculo_id) REFERENCES titular_vehiculo (id)
 );
@@ -90,7 +90,7 @@ VALUES ('12345678', 'Juan', 'Perez'),
        ('87654321', 'Maria', 'Gonzalez');
 
 -- Insertar datos en Vehiculos
-INSERT INTO vehiculos (marca, modelo, año, titular_vehiculo_id)
+INSERT INTO vehiculos (marca, modelo, anio, titular_vehiculo_id)
 VALUES ('Toyota', 'Corolla', 2019, 1),
        ('Honda', 'Civic', 2018, 2);
 

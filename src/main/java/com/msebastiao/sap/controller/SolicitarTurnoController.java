@@ -101,8 +101,9 @@ public class SolicitarTurnoController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Turno");
             alert.setHeaderText(null);
-            alert.setContentText("El turno ha sido solicitado exitosamente.");
+            alert.setContentText("No se pudo solicitar el turno por un error inesperado.");
             alert.showAndWait();
+            e.printStackTrace();
         }
     }
 }

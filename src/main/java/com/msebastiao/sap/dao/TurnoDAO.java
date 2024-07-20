@@ -95,7 +95,7 @@ public class TurnoDAO implements DAO<Turno> {
             } else {
                 stmt.setNull(5, Types.INTEGER);
             }
-            stmt.setInt(8, turno.getId());
+            stmt.setInt(6, turno.getId());
             stmt.executeUpdate();
         }
     }
