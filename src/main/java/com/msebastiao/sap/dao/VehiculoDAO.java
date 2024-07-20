@@ -10,14 +10,14 @@ import java.util.List;
 
 public class VehiculoDAO implements DAO<Vehiculo> {
 
-    private Connection connection;
+    private final Connection connection;
 
     public VehiculoDAO() throws SQLException {
         this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
     @Override
-    public void insert(Vehiculo vehiculo) throws Exception {
+    public void insert(Vehiculo vehiculo) throws SQLException {
         String query = "INSERT INTO vehiculos (marca, modelo, anio, titular_vehiculo_id) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, vehiculo.getMarca());
@@ -39,7 +39,7 @@ public class VehiculoDAO implements DAO<Vehiculo> {
     }
 
     @Override
-    public Vehiculo getById(int id) throws Exception {
+    public Vehiculo getById(int id) throws SQLException {
         String query = "SELECT * FROM vehiculos WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
@@ -59,7 +59,7 @@ public class VehiculoDAO implements DAO<Vehiculo> {
     }
 
     @Override
-    public List<Vehiculo> getAll() throws Exception {
+    public List<Vehiculo> getAll() throws SQLException {
         List<Vehiculo> vehiculos = new ArrayList<>();
         String query = "SELECT * FROM vehiculos";
         try (PreparedStatement stmt = connection.prepareStatement(query);
@@ -79,7 +79,7 @@ public class VehiculoDAO implements DAO<Vehiculo> {
     }
 
     @Override
-    public void update(Vehiculo vehiculo) throws Exception {
+    public void update(Vehiculo vehiculo) throws SQLException {
         String query = "UPDATE vehiculos SET marca = ?, modelo = ?, anio = ?, titular_vehiculo_id = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, vehiculo.getMarca());
@@ -96,7 +96,7 @@ public class VehiculoDAO implements DAO<Vehiculo> {
     }
 
     @Override
-    public void delete(int id) throws Exception {
+    public void delete(int id) throws SQLException {
         String query = "DELETE FROM vehiculos WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);

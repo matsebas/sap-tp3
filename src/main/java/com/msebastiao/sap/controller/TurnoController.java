@@ -3,12 +3,11 @@ package com.msebastiao.sap.controller;
 import com.msebastiao.sap.dao.AgendaDAO;
 import com.msebastiao.sap.dao.TitularVehiculoDAO;
 import com.msebastiao.sap.dao.TurnoDAO;
-import com.msebastiao.sap.database.DatabaseConnection;
 import com.msebastiao.sap.model.Agenda;
 import com.msebastiao.sap.model.TitularVehiculo;
 import com.msebastiao.sap.model.Turno;
+import javafx.scene.control.Alert;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Comparator;
@@ -39,7 +38,7 @@ public class TurnoController {
     }
 
     public void solicitarTurno(int turnoId, String dni) {
-        try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
+        try {
             TurnoDAO turnoDAO = new TurnoDAO();
             TitularVehiculoDAO titularVehiculoDAO = new TitularVehiculoDAO();
 
@@ -50,37 +49,18 @@ public class TurnoController {
                 turno.setEstado("Solicitado");
                 turno.setTitularVehiculo(titular);
                 turnoDAO.update(turno);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Turnos");
+                alert.setHeaderText(null);
+                alert.setContentText("El Turno fue solicitado con éxito!");
+                alert.showAndWait();
             } else {
-                throw new Exception("Turno o Titular no encontrado");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Turnos");
+                alert.setHeaderText(null);
+                alert.setContentText("El Titular no existe o no fue encontrado con el DNI ingresado");
+                alert.showAndWait();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Turno obtenerTurnoPorId(int id) {
-        try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
-            TurnoDAO turnoDAO = new TurnoDAO();
-            return turnoDAO.getById(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public void actualizarTurno(Turno turno) {
-        try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
-            TurnoDAO turnoDAO = new TurnoDAO();
-            turnoDAO.update(turno);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void eliminarTurno(int id) {
-        try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
-            TurnoDAO turnoDAO = new TurnoDAO();
-            turnoDAO.delete(id);
         } catch (Exception e) {
             e.printStackTrace();
         }

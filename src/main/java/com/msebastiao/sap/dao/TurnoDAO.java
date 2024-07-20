@@ -20,7 +20,7 @@ public class TurnoDAO implements DAO<Turno> {
     }
 
     @Override
-    public void insert(Turno turno) throws Exception {
+    public void insert(Turno turno) throws SQLException {
         String query = "INSERT INTO turnos (fecha, hora_inicio, hora_fin, estado, titular_vehiculo_id, vehiculo_id, agenda_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setDate(1, Date.valueOf(turno.getFecha()));
@@ -41,7 +41,7 @@ public class TurnoDAO implements DAO<Turno> {
     }
 
     @Override
-    public Turno getById(int id) throws Exception {
+    public Turno getById(int id) throws SQLException {
         String query = "SELECT * FROM turnos WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
@@ -64,7 +64,7 @@ public class TurnoDAO implements DAO<Turno> {
     }
 
     @Override
-    public List<Turno> getAll() throws Exception {
+    public List<Turno> getAll() throws SQLException {
         List<Turno> turnos = new ArrayList<>();
         String query = "SELECT * FROM turnos";
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
@@ -87,7 +87,7 @@ public class TurnoDAO implements DAO<Turno> {
 
 
     @Override
-    public void update(Turno turno) throws Exception {
+    public void update(Turno turno) throws SQLException {
         String query = "UPDATE turnos SET fecha = ?, hora_inicio = ?, hora_fin = ?, estado = ?, titular_vehiculo_id = ?, vehiculo_id = ?, agenda_id = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setDate(1, Date.valueOf(turno.getFecha()));
@@ -111,7 +111,7 @@ public class TurnoDAO implements DAO<Turno> {
         }
     }
 
-    public List<Turno> getByAgendaId(int agendaId) throws Exception {
+    public List<Turno> getByAgendaId(int agendaId) throws SQLException {
         List<Turno> turnos = new ArrayList<>();
         String query = "SELECT * FROM turnos WHERE agenda_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
