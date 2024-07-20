@@ -75,6 +75,8 @@ El proyecto se ha implementado en Java, utilizando las siguientes herramientas y
 - `src/main/java`: Contiene el código fuente principal de la aplicación.
 - `src/main/resources`: Contiene los archivos FXML y otros recursos.
 - `src/test/java`: Contiene las pruebas unitarias.
+- `scripts/01_supercharger.sql`: Script SQL que crea la base y llena datos básicos para poder probar.
+- `scripts/supercharger_dump_OPCIONAL.sql`: Dump OPCIONAL que permite probar rápidamente varios ejemplos de datos.
 
 ## Dependencias principales
 
