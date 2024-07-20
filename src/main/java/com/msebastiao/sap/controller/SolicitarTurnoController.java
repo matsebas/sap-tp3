@@ -8,8 +8,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SolicitarTurnoController {
@@ -42,7 +44,12 @@ public class SolicitarTurnoController {
     }
 
     private void cargarTurnosDisponibles() {
-        List<Turno> turnos = turnoController.obtenerTurnosDisponibles();
+        List<Turno> turnos;
+        try {
+            turnos = turnoController.obtenerTurnosDisponibles();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         turnosTable.getItems().setAll(turnos);
     }
 

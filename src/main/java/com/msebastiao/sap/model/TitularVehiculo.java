@@ -1,5 +1,6 @@
 package com.msebastiao.sap.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TitularVehiculo {
@@ -8,6 +9,15 @@ public class TitularVehiculo {
     private String apellido;
     private String dni;
     private List<Vehiculo> vehiculos;
+
+
+    public TitularVehiculo(int id, String nombre, String apellido, String dni) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.vehiculos = new ArrayList<>();
+    }
 
     public TitularVehiculo(int id, String nombre, String apellido, String dni, List<Vehiculo> vehiculos) {
         this.id = id;

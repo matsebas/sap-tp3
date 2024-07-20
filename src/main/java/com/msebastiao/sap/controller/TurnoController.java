@@ -40,8 +40,8 @@ public class TurnoController {
 
     public void solicitarTurno(int turnoId, String dni) {
         try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
-            TurnoDAO turnoDAO = new TurnoDAO(connection);
-            TitularVehiculoDAO titularVehiculoDAO = new TitularVehiculoDAO(connection);
+            TurnoDAO turnoDAO = new TurnoDAO();
+            TitularVehiculoDAO titularVehiculoDAO = new TitularVehiculoDAO();
 
             Turno turno = turnoDAO.getById(turnoId);
             TitularVehiculo titular = titularVehiculoDAO.getByDni(dni);
@@ -60,7 +60,7 @@ public class TurnoController {
 
     public Turno obtenerTurnoPorId(int id) {
         try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
-            TurnoDAO turnoDAO = new TurnoDAO(connection);
+            TurnoDAO turnoDAO = new TurnoDAO();
             return turnoDAO.getById(id);
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,7 +70,7 @@ public class TurnoController {
 
     public void actualizarTurno(Turno turno) {
         try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
-            TurnoDAO turnoDAO = new TurnoDAO(connection);
+            TurnoDAO turnoDAO = new TurnoDAO();
             turnoDAO.update(turno);
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,7 +79,7 @@ public class TurnoController {
 
     public void eliminarTurno(int id) {
         try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
-            TurnoDAO turnoDAO = new TurnoDAO(connection);
+            TurnoDAO turnoDAO = new TurnoDAO();
             turnoDAO.delete(id);
         } catch (Exception e) {
             e.printStackTrace();

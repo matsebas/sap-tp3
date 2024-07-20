@@ -19,7 +19,7 @@ public class AgendaDAO implements DAO<Agenda> {
 
     @Override
     public void insert(Agenda agenda) throws Exception {
-        String query = "INSERT INTO Agendas (fecha) VALUES (?)";
+        String query = "INSERT INTO agendas (fecha) VALUES (?)";
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setDate(1, Date.valueOf(agenda.getFecha()));
             stmt.executeUpdate();
@@ -28,7 +28,7 @@ public class AgendaDAO implements DAO<Agenda> {
                 if (generatedKeys.next()) {
                     int agendaId = generatedKeys.getInt(1);
                     agenda.setId(agendaId);
-                    TurnoDAO turnoDAO = new TurnoDAO(connection);
+                    TurnoDAO turnoDAO = new TurnoDAO();
                     for (Turno turno : agenda.getTurnos()) {
                         turno.setAgendaId(agendaId);
                         turnoDAO.insert(turno);
@@ -40,13 +40,13 @@ public class AgendaDAO implements DAO<Agenda> {
 
     @Override
     public Agenda getById(int id) throws Exception {
-        String query = "SELECT * FROM Agendas WHERE id = ?";
+        String query = "SELECT * FROM agendas WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     LocalDate fecha = rs.getDate("fecha").toLocalDate();
-                    TurnoDAO turnoDAO = new TurnoDAO(connection);
+                    TurnoDAO turnoDAO = new TurnoDAO();
                     List<Turno> turnos = turnoDAO.getByAgendaId(id);
                     return new Agenda(id, fecha, turnos);
                 }
@@ -58,13 +58,13 @@ public class AgendaDAO implements DAO<Agenda> {
     @Override
     public List<Agenda> getAll() throws Exception {
         List<Agenda> agendas = new ArrayList<>();
-        String query = "SELECT * FROM Agendas";
+        String query = "SELECT * FROM agendas";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 LocalDate fecha = rs.getDate("fecha").toLocalDate();
-                TurnoDAO turnoDAO = new TurnoDAO(connection);
+                TurnoDAO turnoDAO = new TurnoDAO();
                 List<Turno> turnos = turnoDAO.getByAgendaId(id);
                 agendas.add(new Agenda(id, fecha, turnos));
             }
@@ -74,13 +74,13 @@ public class AgendaDAO implements DAO<Agenda> {
 
     @Override
     public void update(Agenda agenda) throws Exception {
-        String query = "UPDATE Agendas SET fecha = ? WHERE id = ?";
+        String query = "UPDATE agendas SET fecha = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setDate(1, Date.valueOf(agenda.getFecha()));
             stmt.setInt(2, agenda.getId());
             stmt.executeUpdate();
 
-            TurnoDAO turnoDAO = new TurnoDAO(connection);
+            TurnoDAO turnoDAO = new TurnoDAO();
             for (Turno turno : agenda.getTurnos()) {
                 if (turno.getId() == 0) {
                     turno.setAgendaId(agenda.getId());
@@ -94,13 +94,13 @@ public class AgendaDAO implements DAO<Agenda> {
 
     @Override
     public void delete(int id) throws Exception {
-        TurnoDAO turnoDAO = new TurnoDAO(connection);
+        TurnoDAO turnoDAO = new TurnoDAO();
         List<Turno> turnos = turnoDAO.getByAgendaId(id);
         for (Turno turno : turnos) {
             turnoDAO.delete(turno.getId());
         }
 
-        String query = "DELETE FROM Agendas WHERE id = ?";
+        String query = "DELETE FROM agendas WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();

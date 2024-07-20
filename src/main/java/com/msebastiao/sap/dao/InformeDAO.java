@@ -1,5 +1,6 @@
 package com.msebastiao.sap.dao;
 
+import com.msebastiao.sap.database.DatabaseConnection;
 import com.msebastiao.sap.model.Informe;
 
 import java.sql.*;
@@ -9,15 +10,15 @@ import java.util.List;
 
 public class InformeDAO implements DAO<Informe> {
 
-    private Connection connection;
+    private final Connection connection;
 
-    public InformeDAO(Connection connection) {
-        this.connection = connection;
+    public InformeDAO() throws SQLException {
+        this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
     @Override
     public void insert(Informe informe) throws Exception {
-        String query = "INSERT INTO Informes (fecha, contenido) VALUES (?, ?)";
+        String query = "INSERT INTO informes (fecha, contenido) VALUES (?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setDate(1, Date.valueOf(informe.getFecha()));
             stmt.setString(2, informe.getContenido());
@@ -27,7 +28,7 @@ public class InformeDAO implements DAO<Informe> {
 
     @Override
     public Informe getById(int id) throws Exception {
-        String query = "SELECT * FROM Informes WHERE id = ?";
+        String query = "SELECT * FROM informes WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -44,7 +45,7 @@ public class InformeDAO implements DAO<Informe> {
     @Override
     public List<Informe> getAll() throws Exception {
         List<Informe> informes = new ArrayList<>();
-        String query = "SELECT * FROM Informes";
+        String query = "SELECT * FROM informes";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
@@ -58,7 +59,7 @@ public class InformeDAO implements DAO<Informe> {
 
     @Override
     public void update(Informe informe) throws Exception {
-        String query = "UPDATE Informes SET fecha = ?, contenido = ? WHERE id = ?";
+        String query = "UPDATE informes SET fecha = ?, contenido = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setDate(1, Date.valueOf(informe.getFecha()));
             stmt.setString(2, informe.getContenido());
@@ -69,7 +70,7 @@ public class InformeDAO implements DAO<Informe> {
 
     @Override
     public void delete(int id) throws Exception {
-        String query = "DELETE FROM Informes WHERE id = ?";
+        String query = "DELETE FROM informes WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();

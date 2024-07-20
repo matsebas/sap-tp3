@@ -1,25 +1,23 @@
 package com.msebastiao.sap.dao;
 
+import com.msebastiao.sap.database.DatabaseConnection;
 import com.msebastiao.sap.model.Mecanico;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MecanicoDAO implements DAO<Mecanico> {
 
-    private Connection connection;
+    private final Connection connection;
 
-    public MecanicoDAO(Connection connection) {
-        this.connection = connection;
+    public MecanicoDAO() throws SQLException {
+        this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
     @Override
     public void insert(Mecanico mecanico) throws Exception {
-        String query = "INSERT INTO Mecanicos (nombre, apellido) VALUES (?, ?)";
+        String query = "INSERT INTO mecanicos (nombre, apellido) VALUES (?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, mecanico.getNombre());
             stmt.setString(2, mecanico.getApellido());
@@ -35,7 +33,7 @@ public class MecanicoDAO implements DAO<Mecanico> {
 
     @Override
     public Mecanico getById(int id) throws Exception {
-        String query = "SELECT * FROM Mecanicos WHERE id = ?";
+        String query = "SELECT * FROM mecanicos WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -52,7 +50,7 @@ public class MecanicoDAO implements DAO<Mecanico> {
     @Override
     public List<Mecanico> getAll() throws Exception {
         List<Mecanico> mecanicos = new ArrayList<>();
-        String query = "SELECT * FROM Mecanicos";
+        String query = "SELECT * FROM mecanicos";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
@@ -67,7 +65,7 @@ public class MecanicoDAO implements DAO<Mecanico> {
 
     @Override
     public void update(Mecanico mecanico) throws Exception {
-        String query = "UPDATE Mecanicos SET nombre = ?, apellido = ? WHERE id = ?";
+        String query = "UPDATE mecanicos SET nombre = ?, apellido = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, mecanico.getNombre());
             stmt.setString(2, mecanico.getApellido());
@@ -78,7 +76,7 @@ public class MecanicoDAO implements DAO<Mecanico> {
 
     @Override
     public void delete(int id) throws Exception {
-        String query = "DELETE FROM Mecanicos WHERE id = ?";
+        String query = "DELETE FROM mecanicos WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();

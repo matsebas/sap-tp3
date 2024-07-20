@@ -17,7 +17,7 @@ public class ActividadDAO implements DAO<Actividad> {
 
     @Override
     public void insert(Actividad actividad) throws Exception {
-        String query = "INSERT INTO Actividades (descripcion, tiempoEmpleado, estado, fichaMecanica_id) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO actividades (descripcion, tiempo_empleado, estado, ficha_mecanica_id) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, actividad.getDescripcion());
             stmt.setInt(2, actividad.getTiempoEmpleado());
@@ -35,15 +35,15 @@ public class ActividadDAO implements DAO<Actividad> {
 
     @Override
     public Actividad getById(int id) throws Exception {
-        String query = "SELECT * FROM Actividades WHERE id = ?";
+        String query = "SELECT * FROM actividades WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     String descripcion = rs.getString("descripcion");
-                    int tiempoEmpleado = rs.getInt("tiempoEmpleado");
+                    int tiempoEmpleado = rs.getInt("tiempo_empleado");
                     String estado = rs.getString("estado");
-                    int fichaMecanicaId = rs.getInt("fichaMecanica_id");
+                    int fichaMecanicaId = rs.getInt("ficha_mecanica_id");
                     return new Actividad(id, descripcion, tiempoEmpleado, estado, fichaMecanicaId);
                 }
             }
@@ -60,9 +60,9 @@ public class ActividadDAO implements DAO<Actividad> {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String descripcion = rs.getString("descripcion");
-                int tiempoEmpleado = rs.getInt("tiempoEmpleado");
+                int tiempoEmpleado = rs.getInt("tiempo_empleado");
                 String estado = rs.getString("estado");
-                int fichaMecanicaId = rs.getInt("fichaMecanica_id");
+                int fichaMecanicaId = rs.getInt("ficha_mecanica_id");
                 actividades.add(new Actividad(id, descripcion, tiempoEmpleado, estado, fichaMecanicaId));
             }
         }
@@ -71,7 +71,7 @@ public class ActividadDAO implements DAO<Actividad> {
 
     @Override
     public void update(Actividad actividad) throws Exception {
-        String query = "UPDATE Actividades SET descripcion = ?, tiempoEmpleado = ?, estado = ?, fichaMecanica_id = ? WHERE id = ?";
+        String query = "UPDATE actividades SET descripcion = ?, tiempo_empleado = ?, estado = ?, ficha_mecanica_id = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, actividad.getDescripcion());
             stmt.setInt(2, actividad.getTiempoEmpleado());
@@ -84,7 +84,7 @@ public class ActividadDAO implements DAO<Actividad> {
 
     @Override
     public void delete(int id) throws Exception {
-        String query = "DELETE FROM Actividades WHERE id = ?";
+        String query = "DELETE FROM actividades WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -93,14 +93,14 @@ public class ActividadDAO implements DAO<Actividad> {
 
     public List<Actividad> getByFichaMecanicaId(int fichaMecanicaId) throws Exception {
         List<Actividad> actividades = new ArrayList<>();
-        String query = "SELECT * FROM Actividades WHERE fichaMecanica_id = ?";
+        String query = "SELECT * FROM actividades WHERE fichaMecanica_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, fichaMecanicaId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     int id = rs.getInt("id");
                     String descripcion = rs.getString("descripcion");
-                    int tiempoEmpleado = rs.getInt("tiempoEmpleado");
+                    int tiempoEmpleado = rs.getInt("tiempo_empleado");
                     String estado = rs.getString("estado");
                     actividades.add(new Actividad(id, descripcion, tiempoEmpleado, estado, fichaMecanicaId));
                 }

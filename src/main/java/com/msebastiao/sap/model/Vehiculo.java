@@ -5,21 +5,21 @@ public class Vehiculo {
     private String marca;
     private String modelo;
     private int anio;
-    private int titularId; // Referencia al ID del titular del vehículo
+    private TitularVehiculo titularVehiculo;
 
-    public Vehiculo(int id, String marca, String modelo, int anio, int titularId) {
+    public Vehiculo(int id, String marca, String modelo, int anio, TitularVehiculo titularVehiculo) {
         this.id = id;
         this.marca = marca;
         this.modelo = modelo;
         this.anio = anio;
-        this.titularId = titularId;
+        this.titularVehiculo = titularVehiculo;
     }
 
-    public Vehiculo(String marca, String modelo, int anio, int titularId) {
+    public Vehiculo(String marca, String modelo, int anio, TitularVehiculo titularVehiculo) {
         this.marca = marca;
         this.modelo = modelo;
         this.anio = anio;
-        this.titularId = titularId;
+        this.titularVehiculo = titularVehiculo;
     }
 
     public int getId() {
@@ -54,11 +54,11 @@ public class Vehiculo {
         this.anio = anio;
     }
 
-    public int getTitularId() {
-        return titularId;
+    public TitularVehiculo getTitularVehiculo() {
+        return titularVehiculo;
     }
 
-    public void setTitularId(int titularId) {
-        this.titularId = titularId;
+    public void setTitularVehiculo(TitularVehiculo titularVehiculo) {
+        this.titularVehiculo = titularVehiculo;
     }
 }

@@ -1,11 +1,10 @@
 package com.msebastiao.sap.dao;
 
+import com.msebastiao.sap.database.DatabaseConnection;
+import com.msebastiao.sap.model.TitularVehiculo;
 import com.msebastiao.sap.model.Vehiculo;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,18 +12,22 @@ public class VehiculoDAO implements DAO<Vehiculo> {
 
     private Connection connection;
 
-    public VehiculoDAO(Connection connection) {
-        this.connection = connection;
+    public VehiculoDAO() throws SQLException {
+        this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
     @Override
     public void insert(Vehiculo vehiculo) throws Exception {
-        String query = "INSERT INTO Vehiculos (marca, modelo, anio, titular_id) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO vehiculos (marca, modelo, anio, titular_vehiculo_id) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, vehiculo.getMarca());
             stmt.setString(2, vehiculo.getModelo());
             stmt.setInt(3, vehiculo.getAnio());
-            stmt.setInt(4, vehiculo.getTitularId());
+            if (vehiculo.getTitularVehiculo() == null) {
+                stmt.setNull(4, Types.INTEGER);
+            } else {
+                stmt.setInt(4, vehiculo.getTitularVehiculo().getId());
+            }
             stmt.executeUpdate();
 
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
@@ -37,7 +40,7 @@ public class VehiculoDAO implements DAO<Vehiculo> {
 
     @Override
     public Vehiculo getById(int id) throws Exception {
-        String query = "SELECT * FROM Vehiculos WHERE id = ?";
+        String query = "SELECT * FROM vehiculos WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -45,8 +48,10 @@ public class VehiculoDAO implements DAO<Vehiculo> {
                     String marca = rs.getString("marca");
                     String modelo = rs.getString("modelo");
                     int anio = rs.getInt("anio");
-                    int titularId = rs.getInt("titular_id");
-                    return new Vehiculo(id, marca, modelo, anio, titularId);
+                    int titularVehiculoId = rs.getInt("titular_vehiculo_id");
+                    TitularVehiculoDAO titularVehiculoDAO = new TitularVehiculoDAO();
+                    TitularVehiculo titularVehiculo = titularVehiculoDAO.getById(titularVehiculoId);
+                    return new Vehiculo(id, marca, modelo, anio, titularVehiculo);
                 }
             }
         }
@@ -56,16 +61,18 @@ public class VehiculoDAO implements DAO<Vehiculo> {
     @Override
     public List<Vehiculo> getAll() throws Exception {
         List<Vehiculo> vehiculos = new ArrayList<>();
-        String query = "SELECT * FROM Vehiculos";
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+        String query = "SELECT * FROM vehiculos";
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String marca = rs.getString("marca");
                 String modelo = rs.getString("modelo");
                 int anio = rs.getInt("anio");
                 int titularId = rs.getInt("titular_id");
-                vehiculos.add(new Vehiculo(id, marca, modelo, anio, titularId));
+                TitularVehiculoDAO titularVehiculoDAO = new TitularVehiculoDAO();
+                TitularVehiculo titularVehiculo = titularVehiculoDAO.getById(titularId);
+                vehiculos.add(new Vehiculo(id, marca, modelo, anio, titularVehiculo));
             }
         }
         return vehiculos;
@@ -73,12 +80,16 @@ public class VehiculoDAO implements DAO<Vehiculo> {
 
     @Override
     public void update(Vehiculo vehiculo) throws Exception {
-        String query = "UPDATE Vehiculos SET marca = ?, modelo = ?, anio = ?, titular_id = ? WHERE id = ?";
+        String query = "UPDATE vehiculos SET marca = ?, modelo = ?, anio = ?, titular_vehiculo_id = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, vehiculo.getMarca());
             stmt.setString(2, vehiculo.getModelo());
             stmt.setInt(3, vehiculo.getAnio());
-            stmt.setInt(4, vehiculo.getTitularId());
+            if (vehiculo.getTitularVehiculo() == null) {
+                stmt.setNull(4, Types.INTEGER);
+            } else {
+                stmt.setInt(4, vehiculo.getTitularVehiculo().getId());
+            }
             stmt.setInt(5, vehiculo.getId());
             stmt.executeUpdate();
         }
@@ -86,28 +97,10 @@ public class VehiculoDAO implements DAO<Vehiculo> {
 
     @Override
     public void delete(int id) throws Exception {
-        String query = "DELETE FROM Vehiculos WHERE id = ?";
+        String query = "DELETE FROM vehiculos WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
-    }
-
-    public List<Vehiculo> getByTitularId(int titularId) throws Exception {
-        List<Vehiculo> vehiculos = new ArrayList<>();
-        String query = "SELECT * FROM Vehiculos WHERE titular_id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, titularId);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    int id = rs.getInt("id");
-                    String marca = rs.getString("marca");
-                    String modelo = rs.getString("modelo");
-                    int anio = rs.getInt("anio");
-                    vehiculos.add(new Vehiculo(id, marca, modelo, anio, titularId));
-                }
-            }
-        }
-        return vehiculos;
     }
 }
