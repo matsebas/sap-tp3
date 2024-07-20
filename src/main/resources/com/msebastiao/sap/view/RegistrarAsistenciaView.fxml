@@ -7,8 +7,8 @@
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="com.msebastiao.sap.controller.RegistrarAsistenciaController"
           prefHeight="400.0" prefWidth="600.0"
-          hgap="10"
-          vgap="8">
+          hgap="10" vgap="8">
+
     <padding>
         <Insets top="10" right="10" bottom="10" left="10"/>
     </padding>
@@ -18,11 +18,16 @@
                GridPane.columnIndex="1"/>
     <Button text="Buscar" onAction="#handleSearch" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
 
-    <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-    <TextField fx:id="nameField" editable="false" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+    <TableView fx:id="tablaTurnos" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="3">
+        <columns>
+            <TableColumn text="DNI" fx:id="dniColumn" prefWidth="100"/>
+            <TableColumn text="Nombre" fx:id="nombreColumn" prefWidth="100"/>
+            <TableColumn text="Apellido" fx:id="apellidoColumn" prefWidth="100"/>
+            <TableColumn text="Fecha y Hora" fx:id="fechaHoraColumn" prefWidth="120"/>
+            <TableColumn text="Estado" fx:id="estadoColumn" prefWidth="180"/>
+        </columns>
+    </TableView>
 
-    <Label text="Fecha y hora del turno:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-    <TextField fx:id="dateField" editable="false" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-    <Button text="Confirmar Asistencia" onAction="#handleConfirm" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+    <Button fx:id="confirmarAsistenciaButton" text="Confirmar Asistencia" onAction="#handleConfirm" disable="true"
+            GridPane.rowIndex="2" GridPane.columnIndex="2"/>
 </GridPane>

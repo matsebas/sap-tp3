@@ -15,17 +15,17 @@
 
     <Label text="Seleccione un turno disponible:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
     <TableView fx:id="turnosTable" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="2"
-               VBox.vgrow="ALWAYS">
+               VBox.vgrow="ALWAYS" onMouseClicked="#verificarEstadoTurno">
         <columns>
-            <TableColumn fx:id="fechaColumn" text="Fecha" prefWidth="150"/>
-            <TableColumn fx:id="horaInicioColumn" text="Hora Inicio" prefWidth="150"/>
-            <TableColumn fx:id="horaFinColumn" text="Hora Fin" prefWidth="150"/>
-            <TableColumn fx:id="estadoColumn" text="Estado" prefWidth="150"/>
+            <TableColumn fx:id="fechaColumn" text="Fecha" prefWidth="100"/>
+            <TableColumn fx:id="horaInicioColumn" text="Hora Inicio" prefWidth="100"/>
+            <TableColumn fx:id="horaFinColumn" text="Hora Fin" prefWidth="100"/>
+            <TableColumn fx:id="estadoColumn" text="Estado" prefWidth="300"/>
         </columns>
     </TableView>
 
     <Label text="DNI:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
     <TextField fx:id="dniField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-    <Button text="Solicitar Turno" onAction="#handleSolicitarTurno" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+    <Button fx:id="solicitarTurnoButton" text="Solicitar Turno" onAction="#handleSolicitarTurno" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 </GridPane>

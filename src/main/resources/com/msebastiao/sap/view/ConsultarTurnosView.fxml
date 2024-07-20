@@ -18,10 +18,10 @@
     <TableView fx:id="tablaTurnos" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3"
                VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn fx:id="fechaColumn" text="Fecha"/>
-            <TableColumn fx:id="horaInicioColumn" text="Hora Inicio"/>
-            <TableColumn fx:id="horaFinColumn" text="Hora Fin"/>
-            <TableColumn fx:id="estadoColumn" prefWidth="81.0" text="Estado"/>
+            <TableColumn fx:id="fechaColumn" text="Fecha" prefWidth="100"/>
+            <TableColumn fx:id="horaInicioColumn" text="Hora Inicio" prefWidth="100"/>
+            <TableColumn fx:id="horaFinColumn" text="Hora Fin" prefWidth="100"/>
+            <TableColumn fx:id="estadoColumn" text="Estado" prefWidth="300" style="-fx-text-alignment: center"/>
         </columns>
     </TableView>
 </GridPane>

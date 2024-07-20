@@ -54,7 +54,11 @@ public class TurnoDAO implements DAO<Turno> {
                     LocalTime horaFin = rs.getTime("hora_fin").toLocalTime();
                     String estado = rs.getString("estado");
                     TitularVehiculoDAO titularVehiculoDAO = new TitularVehiculoDAO();
-                    TitularVehiculo titularVehiculo = titularVehiculoDAO.getById(rs.getInt("titular_vehiculo_id"));
+                    TitularVehiculo titularVehiculo = null;
+                    int titularVehiculoId = rs.getInt("titular_vehiculo_id");
+                    if (titularVehiculoId > 0) {
+                        titularVehiculo = titularVehiculoDAO.getById(titularVehiculoId);
+                    }
                     return new Turno(id, fecha, horaInicio, horaFin, estado, titularVehiculo);
                 }
             }
@@ -74,7 +78,11 @@ public class TurnoDAO implements DAO<Turno> {
                 LocalTime horaFin = rs.getTime("hora_fin").toLocalTime();
                 String estado = rs.getString("estado");
                 TitularVehiculoDAO titularVehiculoDAO = new TitularVehiculoDAO();
-                TitularVehiculo titularVehiculo = titularVehiculoDAO.getById(rs.getInt("titular_vehiculo_id"));
+                TitularVehiculo titularVehiculo = null;
+                int titularVehiculoId = rs.getInt("titular_vehiculo_id");
+                if (titularVehiculoId > 0) {
+                    titularVehiculo = titularVehiculoDAO.getById(titularVehiculoId);
+                }
                 turnos.add(new Turno(id, fecha, horaInicio, horaFin, estado, titularVehiculo));
             }
         }

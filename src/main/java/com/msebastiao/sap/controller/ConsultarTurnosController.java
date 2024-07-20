@@ -10,8 +10,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.sql.SQLException;
 import java.util.List;
+
+import static com.msebastiao.sap.view.AlertUtil.alert;
 
 public class ConsultarTurnosController {
 
@@ -28,11 +29,8 @@ public class ConsultarTurnosController {
     @FXML
     private TableColumn<Turno, String> estadoColumn;
 
-    private TurnoDAO turnoDAO;
-
     @FXML
-    private void initialize() throws SQLException {
-        turnoDAO = new TurnoDAO();
+    private void initialize() {
         // Configurar las columnas de la tabla
         fechaColumn.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         horaInicioColumn.setCellValueFactory(new PropertyValueFactory<>("horaInicio"));
@@ -45,30 +43,25 @@ public class ConsultarTurnosController {
         String dni = dniField.getText();
 
         if (dni.isEmpty()) {
-            mostrarAlerta("Error", "Por favor, ingrese un DNI.");
+            alert(Alert.AlertType.ERROR, "Error", "Por favor, ingrese un DNI.");
             return;
         }
 
         try {
-            List<Turno> turnos = turnoDAO.getAll().stream().filter(t -> t.getTitularVehiculo() != null
-                    && dni.equals(t.getTitularVehiculo().getDni())).toList();
+
+            TurnoDAO turnoDAO = new TurnoDAO();
+
+            List<Turno> turnos = turnoDAO.getAll().stream().filter(turno -> turno.getTitularVehiculo() != null
+                    && dni.equals(turno.getTitularVehiculo().getDni())).toList();
 
             if (turnos.isEmpty()) {
-                mostrarAlerta("No se encontraron turnos", "No se encontraron turnos para el DNI ingresado.");
+                alert(Alert.AlertType.WARNING, "No se encontraron turnos", "No se encontraron turnos para el DNI ingresado.");
             } else {
                 tablaTurnos.setItems(FXCollections.observableArrayList(turnos));
             }
         } catch (Exception e) {
-            mostrarAlerta("Error de base de datos", "Ocurrió un error al consultar la base de datos.");
+            alert(Alert.AlertType.ERROR, "Error de base de datos", "Ocurrió un error al consultar la base de datos.");
             e.printStackTrace();
         }
-    }
-
-    private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
     }
 }

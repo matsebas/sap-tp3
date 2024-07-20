@@ -40,7 +40,7 @@ public class TitularVehiculoDAO implements DAO<TitularVehiculo> {
                     String dni = rs.getString("dni");
                     String nombre = rs.getString("nombre");
                     String apellido = rs.getString("apellido");
-                    TitularVehiculo titularVehiculo = new TitularVehiculo(id, dni, nombre, apellido);
+                    TitularVehiculo titularVehiculo = new TitularVehiculo(id, nombre, apellido, dni);
                     titularVehiculo.setVehiculos(getVehiculosByTitularId(titularVehiculo));
                     return titularVehiculo;
                 }
@@ -53,14 +53,13 @@ public class TitularVehiculoDAO implements DAO<TitularVehiculo> {
     public List<TitularVehiculo> getAll() throws SQLException {
         List<TitularVehiculo> titulares = new ArrayList<>();
         String query = "SELECT * FROM titular_vehiculo";
-        try (PreparedStatement stmt = connection.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
+        try (PreparedStatement stmt = connection.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String dni = rs.getString("dni");
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
-                TitularVehiculo titularVehiculo = new TitularVehiculo(id, dni, nombre, apellido);
+                TitularVehiculo titularVehiculo = new TitularVehiculo(id, nombre, apellido, dni);
                 titularVehiculo.setVehiculos(getVehiculosByTitularId(titularVehiculo));
                 titulares.add(titularVehiculo);
 
@@ -99,7 +98,7 @@ public class TitularVehiculoDAO implements DAO<TitularVehiculo> {
                     int id = rs.getInt("id");
                     String nombre = rs.getString("nombre");
                     String apellido = rs.getString("apellido");
-                    TitularVehiculo titularVehiculo = new TitularVehiculo(id, dni, nombre, apellido);
+                    TitularVehiculo titularVehiculo = new TitularVehiculo(id, nombre, apellido, dni);
                     titularVehiculo.setVehiculos(getVehiculosByTitularId(titularVehiculo));
                     return titularVehiculo;
                 }
