@@ -88,7 +88,7 @@ Aquí tienes un ejemplo de la configuración:
 
 ```java
 private void crearConexion() throws SQLException {
-    String url = "jdbc:mysql://localhost:3306/glucoforecast";
+    String url = "jdbc:mysql://localhost:3306/supercharger";
     String usuario = "root";
     String contrasena = "P4ssw0rd!";
     conexion = DriverManager.getConnection(url, usuario, contrasena);
