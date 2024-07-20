@@ -85,8 +85,8 @@ El proyecto se ha implementado en Java, utilizando las siguientes herramientas y
 
 ## Configuración de la base de datos
 
-Asegúrate de que la configuración de la base de datos en tu clase `DatabaseConnection` apunte a tu instancia de MySQL.
-Aquí tienes un ejemplo de la configuración:
+Asegúrate de que la configuración de la base de datos en tu clase `DatabaseConnection` 
+apunte a tu instancia de MySQL. Ejemplo de la configuración:
 
 ```java
 private void crearConexion() throws SQLException {
