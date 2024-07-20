@@ -16,7 +16,7 @@ public class MecanicoDAO implements DAO<Mecanico> {
     }
 
     @Override
-    public void insert(Mecanico mecanico) throws Exception {
+    public void insert(Mecanico mecanico) throws SQLException {
         String query = "INSERT INTO mecanicos (nombre, apellido) VALUES (?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, mecanico.getNombre());
@@ -32,7 +32,7 @@ public class MecanicoDAO implements DAO<Mecanico> {
     }
 
     @Override
-    public Mecanico getById(int id) throws Exception {
+    public Mecanico getById(int id) throws SQLException {
         String query = "SELECT * FROM mecanicos WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
@@ -48,7 +48,7 @@ public class MecanicoDAO implements DAO<Mecanico> {
     }
 
     @Override
-    public List<Mecanico> getAll() throws Exception {
+    public List<Mecanico> getAll() throws SQLException {
         List<Mecanico> mecanicos = new ArrayList<>();
         String query = "SELECT * FROM mecanicos";
         try (Statement stmt = connection.createStatement();
@@ -64,7 +64,7 @@ public class MecanicoDAO implements DAO<Mecanico> {
     }
 
     @Override
-    public void update(Mecanico mecanico) throws Exception {
+    public void update(Mecanico mecanico) throws SQLException {
         String query = "UPDATE mecanicos SET nombre = ?, apellido = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, mecanico.getNombre());
@@ -75,7 +75,7 @@ public class MecanicoDAO implements DAO<Mecanico> {
     }
 
     @Override
-    public void delete(int id) throws Exception {
+    public void delete(int id) throws SQLException {
         String query = "DELETE FROM mecanicos WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);

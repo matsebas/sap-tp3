@@ -61,4 +61,11 @@ public class Actividad {
     public void setFichaMecanicaId(int fichaMecanicaId) {
         this.fichaMecanicaId = fichaMecanicaId;
     }
+
+    @Override
+    public String toString() {
+        return "Actividad #" + id +
+                " / " + descripcion +
+                " (" + estado + ')';
+    }
 }

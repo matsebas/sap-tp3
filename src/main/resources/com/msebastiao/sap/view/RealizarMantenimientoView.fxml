@@ -1,34 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import java.lang.String?>
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="com.msebastiao.sap.controller.RealizarMantenimientoController"
-          prefHeight="400.0" prefWidth="600.0"
+          prefHeight="800.0" prefWidth="600.0"
           hgap="10"
           vgap="8">
     <padding>
         <Insets top="10" right="10" bottom="10" left="10"/>
     </padding>
 
-    <Label text="Ficha N°:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-    <TextField fx:id="fichaField" promptText="Ingrese el número de ficha" GridPane.rowIndex="0"
-               GridPane.columnIndex="1"/>
+    <Label text="Fichas:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <ComboBox fx:id="fichasComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"/>
 
-    <Label text="Cliente:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-    <TextField fx:id="clienteField" editable="false" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+    <Label text="Vehículo:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <GridPane GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" hgap="10"
+              vgap="8">
+        <Label text="Marca:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="marcaField" editable="false" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <Label text="Modelo:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="modeloField" editable="false" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <Label text="Año:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="anioField" editable="false" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    </GridPane>
 
-    <Label text="Vehículo:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-    <TextField fx:id="vehiculoField" editable="false" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    <Separator GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+    <Label text="Agregar actividad:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
 
-    <Label text="Actividades realizadas:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-    <TextArea fx:id="actividadesArea" prefHeight="100" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+    <GridPane GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2" hgap="10" vgap="8">
+        <Label text="Descripción:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="descripcionActividadField" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                   GridPane.hgrow="ALWAYS"/>
+        <Label text="Estado:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="estadoActividadComboBox" GridPane.rowIndex="1" GridPane.columnIndex="1">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="En curso"/>
+                    <String fx:value="Finalizada"/>
+                    <String fx:value="Cancelada"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
 
-    <Label text="Repuestos utilizados:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-    <TextArea fx:id="repuestosArea" prefHeight="100" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+        <Button fx:id="agregarActividadButton" text="Agregar" onAction="#agregarActividad" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+    </GridPane>
 
-    <Button text="Finalizar Mantenimiento" onAction="#handleFinalizarMantenimiento" GridPane.rowIndex="5"
-            GridPane.columnIndex="1"/>
+    <Label text="Actividades realizadas:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+    <TableView fx:id="tablaActividades" GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.columnSpan="2">
+        <columns>
+            <TableColumn text="Descripción" fx:id="descripcionActividadColumn" prefWidth="300"/>
+            <TableColumn text="Estado" fx:id="estadoActividadColumn" prefWidth="100"/>
+        </columns>
+    </TableView>
+
+    <Separator GridPane.rowIndex="8" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+    <Label text="Agregar Repuesto:" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+
+    <GridPane GridPane.rowIndex="10" GridPane.columnIndex="0" GridPane.columnSpan="2" hgap="10" vgap="8">
+        <Label text="Nombre:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="nombreRepuestoField" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"/>
+        <Label text="Cantidad:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <Spinner fx:id="cantidadRepuestoSpinner" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <Button fx:id="agregarRepuestoButton"  text="Agregar" onAction="#agregarRepuesto" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <TableView fx:id="tablaRepuestos" GridPane.rowIndex="11" GridPane.columnIndex="0" GridPane.columnSpan="2">
+        <columns>
+            <TableColumn text="Nombre" fx:id="nombreRepuestoColumn" prefWidth="400"/>
+            <TableColumn text="Cantidad" fx:id="cantidadRepuestoColumn"/>
+        </columns>
+    </TableView>
 </GridPane>

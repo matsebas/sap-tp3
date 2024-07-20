@@ -66,7 +66,7 @@ CREATE TABLE actividades
     FOREIGN KEY (ficha_mecanica_id) REFERENCES fichas_mecanicas (id)
 );
 
--- Crear la tabla Repuestos
+-- Crear la tabla Repuesto
 CREATE TABLE repuestos
 (
     id                INT AUTO_INCREMENT PRIMARY KEY,

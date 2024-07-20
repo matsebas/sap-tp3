@@ -1,6 +1,8 @@
 package com.msebastiao.sap.controller;
 
+import com.msebastiao.sap.dao.FichaMecanicaDAO;
 import com.msebastiao.sap.dao.TurnoDAO;
+import com.msebastiao.sap.model.FichaMecanica;
 import com.msebastiao.sap.model.Turno;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -87,13 +89,13 @@ public class RegistrarAsistenciaController {
                     setText(item);
                     if (item.equals("Solicitado")) {
                         setTextFill(Color.BLACK);
-                        setStyle("-fx-background-color: lightgreen;");
+                        setStyle("-fx-background-color: lightblue;");
                     } else if (item.equals("Confirmado")) {
                         setTextFill(Color.WHITE);
                         setStyle("-fx-background-color: green;");
                     } else {
                         setTextFill(Color.BLACK);
-                        setStyle("-fx-background-color: yellow;");
+                        setStyle("-fx-background-color: gray;");
                     }
                 }
             }
@@ -102,7 +104,8 @@ public class RegistrarAsistenciaController {
 
     private void cargarTurnosSolicitados() {
         try {
-            List<Turno> turnosSolicitados = turnoDAO.getAll().stream().filter(turno -> turno.getEstado().equals("Solicitado")).toList();
+            List<Turno> turnosSolicitados = turnoDAO.getAll().stream()
+                    .filter(turno -> "Solicitado".equals(turno.getEstado()) || "Confirmado".equals(turno.getEstado())).toList();
             turnosData.clear();
             turnosData.addAll(turnosSolicitados);
         } catch (SQLException e) {
@@ -115,10 +118,7 @@ public class RegistrarAsistenciaController {
     private void handleSearch() {
         String busqueda = searchField.getText();
         try {
-            List<Turno> turnosEncontrados = turnoDAO.getAll().stream()
-                    .filter(turno -> turno.getTitularVehiculo() != null
-                            && (turno.getTitularVehiculo().getDni().toLowerCase().contains(busqueda)
-                            || turno.getTitularVehiculo().getApellido().toLowerCase().contains(busqueda))).toList();
+            List<Turno> turnosEncontrados = turnoDAO.getAll().stream().filter(turno -> turno.getTitularVehiculo() != null && (turno.getTitularVehiculo().getDni().toLowerCase().contains(busqueda) || turno.getTitularVehiculo().getApellido().toLowerCase().contains(busqueda))).toList();
             turnosData.clear();
             turnosData.addAll(turnosEncontrados);
         } catch (SQLException e) {
@@ -134,6 +134,12 @@ public class RegistrarAsistenciaController {
             try {
                 turnoSeleccionado.setEstado("Confirmado");
                 turnoDAO.update(turnoSeleccionado);
+
+                // Se crea la Ficha Mecánica con los datos del turno confirmado
+                FichaMecanicaDAO fichaMecanicaDAO = new FichaMecanicaDAO();
+                FichaMecanica fichaMecanica = new FichaMecanica(turnoSeleccionado.getTitularVehiculo(), turnoSeleccionado.getTitularVehiculo().getVehiculos().getFirst(), turnoSeleccionado.getFecha());
+                fichaMecanicaDAO.insert(fichaMecanica);
+
                 alert(Alert.AlertType.INFORMATION, "Asistencia confirmada", "La asistencia ha sido confirmada.");
                 tablaTurnos.refresh();
             } catch (SQLException e) {

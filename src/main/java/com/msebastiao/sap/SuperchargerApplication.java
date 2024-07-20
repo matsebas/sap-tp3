@@ -79,8 +79,9 @@ public class SuperchargerApplication extends Application {
         root.setTop(menuBar);
         root.setCenter(tabPane);
 
-        Scene scene = new Scene(root, 630, 320);
+        Scene scene = new Scene(root,600,800);
         primaryStage.setScene(scene);
+        primaryStage.sizeToScene();
         primaryStage.show();
     }
 

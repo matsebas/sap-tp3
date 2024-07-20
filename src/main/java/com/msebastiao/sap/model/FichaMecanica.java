@@ -1,6 +1,8 @@
 package com.msebastiao.sap.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FichaMecanica {
@@ -12,11 +14,21 @@ public class FichaMecanica {
     private LocalDate fechaFin;
     private String estado;
     private List<Actividad> actividadesRealizadas;
-    private List<Repuestos> repuestosEmpleados;
+    private List<Repuesto> repuestosEmpleados;
+
+    public FichaMecanica(TitularVehiculo titularVehiculo, Vehiculo vehiculo,
+                         LocalDate fechaInicio) {
+        this.titularVehiculo = titularVehiculo;
+        this.vehiculo = vehiculo;
+        this.fechaInicio = fechaInicio;
+        this.estado = "Pendiente";
+        this.actividadesRealizadas = new ArrayList<>();
+        this.repuestosEmpleados = new ArrayList<>();
+    }
 
     public FichaMecanica(int id, Mecanico mecanico, TitularVehiculo titularVehiculo, Vehiculo vehiculo,
                          LocalDate fechaInicio, LocalDate fechaFin, String estado,
-                         List<Actividad> actividadesRealizadas, List<Repuestos> repuestosEmpleados) {
+                         List<Actividad> actividadesRealizadas, List<Repuesto> repuestosEmpleados) {
         this.id = id;
         this.mecanico = mecanico;
         this.titularVehiculo = titularVehiculo;
@@ -92,11 +104,19 @@ public class FichaMecanica {
         this.actividadesRealizadas = actividadesRealizadas;
     }
 
-    public List<Repuestos> getRepuestosEmpleados() {
+    public List<Repuesto> getRepuestosEmpleados() {
         return repuestosEmpleados;
     }
 
-    public void setRepuestosEmpleados(List<Repuestos> repuestosEmpleados) {
+    public void setRepuestosEmpleados(List<Repuesto> repuestosEmpleados) {
         this.repuestosEmpleados = repuestosEmpleados;
+    }
+
+    @Override
+    public String toString() {
+        return "Ficha #" + id +
+                " / " + titularVehiculo +
+                " / " + vehiculo +
+                " (" + fechaInicio.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + ")";
     }
 }

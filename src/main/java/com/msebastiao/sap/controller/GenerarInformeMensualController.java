@@ -22,7 +22,6 @@ public class GenerarInformeMensualController {
 
     @FXML
     private void handleGenerarInforme() {
-        // Lógica para mostrar el informe
-        alert(Alert.AlertType.INFORMATION, "Informes", "El informe para el mes de " + mesComboBox.getValue() + " ha sido generado exitosamente.");
+        alert(Alert.AlertType.INFORMATION, "Informes", "El informe para el mes de " + mesComboBox.getValue() + " no está disponible.");
     }
 }

@@ -16,7 +16,7 @@ public class ActividadDAO implements DAO<Actividad> {
     }
 
     @Override
-    public void insert(Actividad actividad) throws Exception {
+    public void insert(Actividad actividad) throws SQLException {
         String query = "INSERT INTO actividades (descripcion, tiempo_empleado, estado, ficha_mecanica_id) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, actividad.getDescripcion());
@@ -34,7 +34,7 @@ public class ActividadDAO implements DAO<Actividad> {
     }
 
     @Override
-    public Actividad getById(int id) throws Exception {
+    public Actividad getById(int id) throws SQLException {
         String query = "SELECT * FROM actividades WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
@@ -52,9 +52,9 @@ public class ActividadDAO implements DAO<Actividad> {
     }
 
     @Override
-    public List<Actividad> getAll() throws Exception {
+    public List<Actividad> getAll() throws SQLException {
         List<Actividad> actividades = new ArrayList<>();
-        String query = "SELECT * FROM Actividades";
+        String query = "SELECT * FROM actividades";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
@@ -70,7 +70,7 @@ public class ActividadDAO implements DAO<Actividad> {
     }
 
     @Override
-    public void update(Actividad actividad) throws Exception {
+    public void update(Actividad actividad) throws SQLException {
         String query = "UPDATE actividades SET descripcion = ?, tiempo_empleado = ?, estado = ?, ficha_mecanica_id = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, actividad.getDescripcion());
@@ -83,7 +83,7 @@ public class ActividadDAO implements DAO<Actividad> {
     }
 
     @Override
-    public void delete(int id) throws Exception {
+    public void delete(int id) throws SQLException {
         String query = "DELETE FROM actividades WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
@@ -91,9 +91,9 @@ public class ActividadDAO implements DAO<Actividad> {
         }
     }
 
-    public List<Actividad> getByFichaMecanicaId(int fichaMecanicaId) throws Exception {
+    public List<Actividad> getByFichaMecanicaId(int fichaMecanicaId) throws SQLException {
         List<Actividad> actividades = new ArrayList<>();
-        String query = "SELECT * FROM actividades WHERE fichaMecanica_id = ?";
+        String query = "SELECT * FROM actividades WHERE ficha_mecanica_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, fichaMecanicaId);
             try (ResultSet rs = stmt.executeQuery()) {

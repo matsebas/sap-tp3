@@ -1,19 +1,19 @@
 package com.msebastiao.sap.model;
 
-public class Repuestos {
+public class Repuesto {
     private int id;
     private String nombre;
     private int cantidad;
     private int fichaMecanicaId;
 
-    public Repuestos(int id, String nombre, int cantidad, int fichaMecanicaId) {
+    public Repuesto(int id, String nombre, int cantidad, int fichaMecanicaId) {
         this.id = id;
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.fichaMecanicaId = fichaMecanicaId;
     }
 
-    public Repuestos(String nombre, int cantidad, int fichaMecanicaId) {
+    public Repuesto(String nombre, int cantidad, int fichaMecanicaId) {
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.fichaMecanicaId = fichaMecanicaId;
