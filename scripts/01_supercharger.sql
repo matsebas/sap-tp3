@@ -28,13 +28,6 @@ CREATE TABLE mecanicos
     apellido VARCHAR(100) NOT NULL
 );
 
--- Crear la tabla Agendas
-CREATE TABLE agendas
-(
-    id    INT AUTO_INCREMENT PRIMARY KEY,
-    fecha DATE NOT NULL
-);
-
 -- Crear la tabla Turnos
 CREATE TABLE turnos
 (
@@ -44,11 +37,7 @@ CREATE TABLE turnos
     hora_fin            TIME        NOT NULL,
     estado              VARCHAR(50) NOT NULL,
     titular_vehiculo_id INT,
-    vehiculo_id         INT,
-    agenda_id           INT,
-    FOREIGN KEY (titular_vehiculo_id) REFERENCES titular_vehiculo (id),
-    FOREIGN KEY (vehiculo_id) REFERENCES vehiculos (id),
-    FOREIGN KEY (agenda_id) REFERENCES agendas (id)
+    FOREIGN KEY (titular_vehiculo_id) REFERENCES titular_vehiculo (id)
 );
 
 -- Crear la tabla FichasMecanicas
@@ -97,27 +86,23 @@ CREATE TABLE informes
 
 -- Insertar datos en TitularVehiculo
 INSERT INTO titular_vehiculo (dni, nombre, apellido)
-VALUES ('12345678', 'Juan',  'Perez'   ),
+VALUES ('12345678', 'Juan', 'Perez'),
        ('87654321', 'Maria', 'Gonzalez');
 
 -- Insertar datos en Vehiculos
 INSERT INTO vehiculos (marca, modelo, año, titular_vehiculo_id)
 VALUES ('Toyota', 'Corolla', 2019, 1),
-       ('Honda',  'Civic',   2018, 2);
+       ('Honda', 'Civic', 2018, 2);
 
 -- Insertar datos en Mecanicos
 INSERT INTO mecanicos (nombre, apellido)
-VALUES ('Carlos', 'Lopez'   ),
-       ('Pedro',  'Martinez');
-
--- Insertar datos en Agendas
-INSERT INTO agendas (fecha)
-VALUES ('2024-07-20');
+VALUES ('Carlos', 'Lopez'),
+       ('Pedro', 'Martinez');
 
 -- Insertar datos en Mecanicos
 INSERT INTO mecanicos (nombre, apellido)
-VALUES ('Carlos', 'Lopez'   ),
-       ('Pedro',  'Martinez');
+VALUES ('Carlos', 'Lopez'),
+       ('Pedro', 'Martinez');
 
 -- Eliminación del procedimiento almacenado si existe
 DROP PROCEDURE IF EXISTS insert_turnos;
@@ -149,9 +134,8 @@ BEGIN
                 WHILE v_time < '18:00:00'
                     DO
                         SET v_next_time = ADDTIME(v_time, '02:00:00');
-                        INSERT INTO turnos (fecha, hora_inicio, hora_fin, estado, titular_vehiculo_id, vehiculo_id,
-                                            agenda_id)
-                        VALUES (v_date, v_time, v_next_time, 'Disponible', NULL, NULL, 1);
+                        INSERT INTO turnos (fecha, hora_inicio, hora_fin, estado, titular_vehiculo_id)
+                        VALUES (v_date, v_time, v_next_time, 'Disponible', NULL);
                         SET v_time = v_next_time;
                     END WHILE;
             END IF;

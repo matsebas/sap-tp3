@@ -34,7 +34,7 @@ public class SuperchargerApplication extends Application {
         solicitarTurnoItem.setOnAction(e -> openView("Clientes - Solicitar Turno", "SolicitarTurnoView"));
         clientesMenu.getItems().add(solicitarTurnoItem);
         MenuItem consultarTurnosItem = new MenuItem("Consultar Turnos");
-        solicitarTurnoItem.setOnAction(e -> openView("Clientes - Consultar Turnos", "ConsultarTurnosView"));
+        consultarTurnosItem.setOnAction(e -> openView("Clientes - Consultar Turnos", "ConsultarTurnosView"));
         clientesMenu.getItems().add(consultarTurnosItem);
 
         // Elementos para el menú Recepción

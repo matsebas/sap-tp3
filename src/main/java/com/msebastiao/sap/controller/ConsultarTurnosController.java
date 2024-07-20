@@ -4,7 +4,10 @@ import com.msebastiao.sap.dao.TurnoDAO;
 import com.msebastiao.sap.model.Turno;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.SQLException;
@@ -24,8 +27,6 @@ public class ConsultarTurnosController {
     private TableColumn<Turno, String> horaFinColumn;
     @FXML
     private TableColumn<Turno, String> estadoColumn;
-    @FXML
-    private Button buscarButton;
 
     private TurnoDAO turnoDAO;
 
@@ -49,23 +50,22 @@ public class ConsultarTurnosController {
         }
 
         try {
-            List<Turno> turnos = turnoDAO.getAll().stream().filter(t -> t.getTitularVehiculo().getDni().equals(dni)).toList();
+            List<Turno> turnos = turnoDAO.getAll().stream().filter(t -> t.getTitularVehiculo() != null
+                    && dni.equals(t.getTitularVehiculo().getDni())).toList();
 
             if (turnos.isEmpty()) {
                 mostrarAlerta("No se encontraron turnos", "No se encontraron turnos para el DNI ingresado.");
             } else {
                 tablaTurnos.setItems(FXCollections.observableArrayList(turnos));
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             mostrarAlerta("Error de base de datos", "Ocurrió un error al consultar la base de datos.");
             e.printStackTrace();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 
     private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);

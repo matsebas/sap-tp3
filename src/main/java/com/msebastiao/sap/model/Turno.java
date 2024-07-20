@@ -10,28 +10,22 @@ public class Turno {
     private LocalTime horaFin;
     private String estado;
     private TitularVehiculo titularVehiculo;
-    private Vehiculo vehiculo;
-    private int agendaId;
 
-    public Turno(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, String estado, TitularVehiculo titularVehiculo, Vehiculo vehiculo, int agendaId) {
+    public Turno(LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, String estado, TitularVehiculo titularVehiculo) {
         this.fecha = fecha;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.estado = estado;
         this.titularVehiculo = titularVehiculo;
-        this.vehiculo = vehiculo;
-        this.agendaId = agendaId;
     }
 
-    public Turno(int id, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, String estado, TitularVehiculo titularVehiculo, Vehiculo vehiculo, int agendaId) {
+    public Turno(int id, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, String estado, TitularVehiculo titularVehiculo) {
         this.id = id;
         this.fecha = fecha;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.estado = estado;
         this.titularVehiculo = titularVehiculo;
-        this.vehiculo = vehiculo;
-        this.agendaId = agendaId;
     }
 
     public int getId() {
@@ -82,19 +76,4 @@ public class Turno {
         this.titularVehiculo = titularVehiculo;
     }
 
-    public Vehiculo getVehiculo() {
-        return vehiculo;
-    }
-
-    public void setVehiculo(Vehiculo vehiculo) {
-        this.vehiculo = vehiculo;
-    }
-
-    public int getAgendaId() {
-        return agendaId;
-    }
-
-    public void setAgendaId(int agendaId) {
-        this.agendaId = agendaId;
-    }
 }

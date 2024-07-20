@@ -1,5 +1,8 @@
 package com.msebastiao.sap.controller;
 
+import com.msebastiao.sap.dao.TitularVehiculoDAO;
+import com.msebastiao.sap.dao.TurnoDAO;
+import com.msebastiao.sap.model.TitularVehiculo;
 import com.msebastiao.sap.model.Turno;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -11,7 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SolicitarTurnoController {
@@ -29,47 +32,76 @@ public class SolicitarTurnoController {
     @FXML
     private TextField dniField;
 
-    private TurnoController turnoController;
-
     @FXML
     public void initialize() {
-        turnoController = new TurnoController();
-
         fechaColumn.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         horaInicioColumn.setCellValueFactory(new PropertyValueFactory<>("horaInicio"));
         horaFinColumn.setCellValueFactory(new PropertyValueFactory<>("horaFin"));
         estadoColumn.setCellValueFactory(new PropertyValueFactory<>("estado"));
 
-        cargarTurnosDisponibles();
+        cargarTurnos();
     }
 
-    private void cargarTurnosDisponibles() {
-        List<Turno> turnos;
+    private void cargarTurnos() {
+
+        List<Turno> turnos = Collections.emptyList();
         try {
-            turnos = turnoController.obtenerTurnosDisponibles();
+            TurnoDAO turnoDAO = new TurnoDAO();
+            turnos = turnoDAO.getAll();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Turnos");
+            alert.setHeaderText(null);
+            alert.setContentText("No se encontraron turnos disponibles");
+            alert.showAndWait();
         }
         turnosTable.getItems().setAll(turnos);
     }
 
+
     @FXML
     private void handleSolicitarTurno() {
-        Turno selectedTurno = turnosTable.getSelectionModel().getSelectedItem();
-        if (selectedTurno != null) {
+        try {
+            Turno selectedTurno = turnosTable.getSelectionModel().getSelectedItem();
+            if (selectedTurno == null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Por favor, seleccione un turno disponible.");
+                alert.showAndWait();
+                return;
+            }
             String dni = dniField.getText();
-            turnoController.solicitarTurno(selectedTurno.getId(), dni);
-            cargarTurnosDisponibles();
+            TitularVehiculoDAO titularVehiculoDAO = new TitularVehiculoDAO();
+            TitularVehiculo titular = titularVehiculoDAO.getByDni(dni);
+
+            if (titular == null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("El Titular no existe o no fue encontrado con el DNI ingresado");
+                alert.showAndWait();
+                return;
+            }
+
+            selectedTurno.setEstado("Solicitado");
+            selectedTurno.setTitularVehiculo(titular);
+            TurnoDAO turnoDAO = new TurnoDAO();
+            turnoDAO.update(selectedTurno);
+
+            cargarTurnos();
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Turno Solicitado");
             alert.setHeaderText(null);
             alert.setContentText("El turno ha sido solicitado exitosamente.");
             alert.showAndWait();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error");
+
+        } catch (SQLException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Turno");
             alert.setHeaderText(null);
-            alert.setContentText("Por favor, seleccione un turno disponible.");
+            alert.setContentText("El turno ha sido solicitado exitosamente.");
             alert.showAndWait();
         }
     }
